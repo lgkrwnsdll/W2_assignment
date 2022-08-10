@@ -87,20 +87,15 @@ public class Taxi extends PublicTransportation {
         }
     }
 
-    public void changeGas(int gas) {
+    public void changeGas(int gas) { // 도착함을 가정
         setGas(getGas() + gas);
         if (getGas() < 10) {
             System.out.println("주유 필요");
             setStatus("No boarding");
             setSpeed(0);
         } else {
-            if (getStatus().equals("No boarding")) { // 충전 후 기름이 충분해졌을 때
-                setStatus("Normal");
-                setSpeed(0);
-            } else { // 운행 중 기름 소비했지만 아직 충분할 때
-                setStatus("Running");
-                setSpeed(50);
-            }
+            setStatus("Normal");
+            setSpeed(0);
         }
     }
 
