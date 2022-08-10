@@ -90,6 +90,8 @@ public class Taxi extends PublicTransportation {
         if (getGas() < 10) {
             System.out.println("주유 필요");
             setStatus("No boarding");
+        } else {
+            setStatus("Normal");
         }
     }
 

@@ -45,6 +45,8 @@ public class Bus extends PublicTransportation {
         if (getGas() < 10) {
             System.out.println("주유 필요");
             setStatus("Garage");
+        } else {
+            setStatus("Running");
         }
     }
 
