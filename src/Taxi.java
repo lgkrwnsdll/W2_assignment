@@ -1,38 +1,12 @@
 public class Taxi extends PublicTransportation {
-    private int maxPassengers = 4;
-    private int fee = 3000;
-    private String status = "Normal";
-
     private int baseDistance = 1;
     private int extraFee = 1000;
     private String destination;
     private int curDistance;
     private int totalFee;
 
-    public int getMaxPassengers() {
-        return maxPassengers;
-    }
-
-    public void setMaxPassengers(int maxPassengers) {
-        this.maxPassengers = maxPassengers;
-    }
-
-    public int getFee() {
-        return fee;
-    }
-
-    public void setFee(int fee) {
-        this.fee = fee;
-    }
-
-    @Override
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
+    public Taxi(int maxPassengers, int fee, String status) {
+        super(maxPassengers, fee, status);
     }
 
     public String getDestination() {
@@ -76,7 +50,6 @@ public class Taxi extends PublicTransportation {
     }
 
     // 기능
-
     @Override
     public void changeGas(int gas) { // 도착함을 가정
         setGas(getGas() + gas);
@@ -92,11 +65,11 @@ public class Taxi extends PublicTransportation {
 
 
     public String boardPassengers(int newPassengers, String destination, int distance) {
-        if (!status.equals("Normal")) {
+        if (!getStatus().equals("Normal")) {
             return "상태를 확인해주세요";
         } else if (getGas() < 10) {
             return "주유 필요";
-        } else if (newPassengers > maxPassengers) {
+        } else if (newPassengers > getMaxPassengers()) {
             return "운행 인원을 초과하였습니다";
         } else {
             setStatus("Running");
@@ -104,13 +77,13 @@ public class Taxi extends PublicTransportation {
             setCurrentPassengers(newPassengers);
             setDestination(destination);
             setCurDistance(distance);
-            int feeToPay = (fee + (distance - baseDistance) * extraFee);
-            return "총 탑승자: " + newPassengers + " 잔여석: " + (maxPassengers - newPassengers) + " 지불할 요금: " + feeToPay;
+            int feeToPay = (getFee() + (distance - baseDistance) * extraFee);
+            return "총 탑승자: " + newPassengers + " 잔여석: " + (getMaxPassengers() - newPassengers) + " 지불할 요금: " + feeToPay;
         }
     }
 
     public void payFee() {
-        int feeToPay = (fee + (getCurDistance() - baseDistance) * extraFee);
+        int feeToPay = (getFee() + (getCurDistance() - baseDistance) * extraFee);
         System.out.println("최종 요금: " + feeToPay);
         setStatus("Normal");
         setSpeed(0);
