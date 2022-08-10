@@ -34,6 +34,8 @@ public class Bus extends PublicTransportation {
             return "주유량을 확인해주세요";
         } else if (!getStatus().equals("Running")) {
             return "상태를 확인해주세요";
+        } else if (getSpeed() + newSpeed < 0) {
+            return "속도가 음수입니다";
         } else {
             setSpeed(getSpeed() + newSpeed);
             return "변경";
@@ -66,6 +68,7 @@ public class Bus extends PublicTransportation {
         } else if (newPassengers > maxPassengers) {
             return "운행 인원을 초과하였습니다";
         } else {
+            setSpeed(50);
             setCurrentPassengers(newPassengers);
             return "총 탑승자: " + newPassengers + " 잔여석: " + (maxPassengers - newPassengers) + " 총 요금: " + newPassengers * getFee();
         }

@@ -79,6 +79,8 @@ public class Taxi extends PublicTransportation {
             return "주유량을 확인해주세요";
         } else if (!getStatus().equals("Running")) {
             return "상태를 확인해주세요";
+        } else if (getSpeed() + newSpeed < 0) {
+            return "속도가 음수입니다";
         } else {
             setSpeed(getSpeed() + newSpeed);
             return "변경";
@@ -90,8 +92,15 @@ public class Taxi extends PublicTransportation {
         if (getGas() < 10) {
             System.out.println("주유 필요");
             setStatus("No boarding");
+            setSpeed(0);
         } else {
-            setStatus("Normal");
+            if (getStatus().equals("No boarding")) { // 충전 후 기름이 충분해졌을 때
+                setStatus("Normal");
+                setSpeed(0);
+            } else { // 운행 중 기름 소비했지만 아직 충분할 때
+                setStatus("Running");
+                setSpeed(50);
+            }
         }
     }
 
@@ -104,6 +113,7 @@ public class Taxi extends PublicTransportation {
             return "운행 인원을 초과하였습니다";
         } else {
             setStatus("Running");
+            setSpeed(50);
             setCurrentPassengers(newPassengers);
             setDestination(destination);
             setCurDistance(distance);
@@ -116,6 +126,7 @@ public class Taxi extends PublicTransportation {
         int feeToPay = (fee + (getCurDistance() - baseDistance) * extraFee);
         System.out.println("최종 요금: " + feeToPay);
         setStatus("Normal");
+        setSpeed(0);
         setCurrentPassengers(0);
         setDestination(null);
         setCurDistance(0);
