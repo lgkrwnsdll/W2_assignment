@@ -57,8 +57,10 @@ public class Bus extends PublicTransportation {
     public void changeStatus() {
         if (this.status.equals("Garage")) {
             this.status = "Running";
+            setSpeed(50);
         } else {
             this.status = "Garage";
+            setSpeed(0);
         }
     }
 
