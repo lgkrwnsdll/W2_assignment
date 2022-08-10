@@ -25,10 +25,12 @@ public class Taxi extends PublicTransportation {
         this.fee = fee;
     }
 
+    @Override
     public String getStatus() {
         return status;
     }
 
+    @Override
     public void setStatus(String status) {
         this.status = status;
     }
@@ -74,19 +76,8 @@ public class Taxi extends PublicTransportation {
     }
 
     // 기능
-    public String changeSpeed(int newSpeed) {
-        if (getGas() < 10) {
-            return "주유량을 확인해주세요";
-        } else if (!getStatus().equals("Running")) {
-            return "상태를 확인해주세요";
-        } else if (getSpeed() + newSpeed < 0) {
-            return "속도가 음수입니다";
-        } else {
-            setSpeed(getSpeed() + newSpeed);
-            return "변경";
-        }
-    }
 
+    @Override
     public void changeGas(int gas) { // 도착함을 가정
         setGas(getGas() + gas);
         if (getGas() < 10) {
@@ -98,6 +89,7 @@ public class Taxi extends PublicTransportation {
             setSpeed(0);
         }
     }
+
 
     public String boardPassengers(int newPassengers, String destination, int distance) {
         if (!status.equals("Normal")) {

@@ -1,4 +1,4 @@
-public class PublicTransportation {
+public abstract class PublicTransportation {
 
     private static int serialNum = 0;
     private int num;
@@ -12,6 +12,15 @@ public class PublicTransportation {
     private int speed = 0;
 
     private int currentPassengers;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getNum() {
         return num;
@@ -45,4 +54,19 @@ public class PublicTransportation {
         this.currentPassengers = currentPassengers;
     }
 
+    // 공통 기능
+    public String changeSpeed(int newSpeed) {
+        if (getGas() < 10) {
+            return "주유량을 확인해주세요";
+        } else if (!getStatus().equals("Running")) {
+            return "상태를 확인해주세요";
+        } else if (getSpeed() + newSpeed < 0) {
+            return "속도가 음수입니다";
+        } else {
+            setSpeed(getSpeed() + newSpeed);
+            return "변경";
+        }
+    }
+
+    public abstract void changeGas(int gas);
 }
